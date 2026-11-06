@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barber Pro - Gestión de citas</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="js.js">
+
+
+
+</head>
+
+<body>
+<div class="app">
+
+<aside class="sidebar">
+  <div class="logo">✂ Barber Pro</div>
+  <div class="subtitle">Sistema de gestión de peluquería</div>
+  <div class="nav">
+    <button class="active" onclick="showView('inicio',this)">🏠 Inicio</button>
+    <button onclick="showView('citas',this)">📅 Citas</button>
+  </div>
+</aside>
+
+<main class="main">
+
+<!-- VISTA PRINCIPAL -->
+<section id="inicio" class="view active">
+
+  <div class="top">
+    <div>
+      <h1>Panel principal</h1>
+      <div class="note">Resumen de la gestión del negocio</div>
+    </div>
+    <div class="user">👤 Administrador</div>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <small>Citas registradas</small>
+      <strong id="totalCitas">3</strong>
+    </div>
+    <div class="card">
+      <small>Clientes registrados</small>
+      <strong id="totalClientes">3</strong>
+    </div>
+    <div class="card">
+      <small>Servicios activos</small>
+      <strong>8</strong>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Próximas citas</h2>
+
+    <!-- BUSCADOR Y FILTRO -->
+    <div class="filtros">
+      <input
+        id="buscarCliente"
+        type="search"
+        placeholder="Buscar cliente..."
+        aria-label="Buscar cliente"
+      >
+
+      <select id="filtroServicio" aria-label="Filtrar por servicio">
+        <option value="Todos">Todos los servicios</option>
+        <option value="Corte clásico">Corte clásico</option>
+        <option value="Corte + barba">Corte + barba</option>
+        <option value="Manicure">Manicure</option>
+        <option value="Coloración">Coloración</option>
+      </select>
+    </div>
+
+    <div class="table-wrap">
+      <table class="table" id="listaCitas">
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Servicio</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Estado</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Juan Pérez</td>
+            <td>Corte clásico</td>
+            <td>2026-10-14</td>
+            <td>15:00</td>
+            <td><span class="badge">Confirmada</span></td>
+            <td>
+              <button class="btn-editar" onclick="editarCita(this)">Editar</button>
+              <button class="btn-eliminar" onclick="eliminarCita(this)">Eliminar</button>
+            </td>
+          </tr>
+
+          <tr>
+            <td>Laura Gómez</td>
+            <td>Manicure</td>
+            <td>2026-10-14</td>
+            <td>16:00</td>
+            <td><span class="badge">Confirmada</span></td>
+            <td>
+              <button class="btn-editar" onclick="editarCita(this)">Editar</button>
+              <button class="btn-eliminar" onclick="eliminarCita(this)">Eliminar</button>
+            </td>
+          </tr>
+
+          <tr>
+            <td>Carlos Ruiz</td>
+            <td>Corte + barba</td>
+            <td>2026-10-14</td>
+            <td>17:00</td>
+            <td><span class="badge">Pendiente</span></td>
+            <td>
+              <button class="btn-editar" onclick="editarCita(this)">Editar</button>
+              <button class="btn-eliminar" onclick="eliminarCita(this)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="sinResultados" class="note" hidden>
+      No hay citas que coincidan con la búsqueda o el filtro.
+    </div>
+
+    <button class="btn" onclick="nuevaCita()">Agendar nueva cita</button>
+  </div>
+</section>
+
+<!-- FORMULARIO DE CITAS -->
+<section id="citas" class="view">
+
+  <div class="top">
+    <div>
+      <h1 id="tituloFormulario">Agendar cita</h1>
+      <div class="note">Registre o modifique una atención para el cliente</div>
+    </div>
+    <div class="user">📅 Gestión de citas</div>
+  </div>
+
+  <div class="panel">
+    <h2>Información de la cita</h2>
+
+    <div id="avisoEdicion" class="editando" hidden>
+      Está editando una cita existente. Al actualizar, se modificará esa misma fila y no se creará una nueva.
+    </div>
+
+    <div class="form-grid">
+      <div>
+        <label for="cliente">Cliente</label>
+        <input id="cliente" placeholder="Ej. Juan Pérez">
+      </div>
+
+      <div>
+        <label for="servicio">Servicio</label>
+        <select id="servicio">
+          <option>Corte clásico</option>
+          <option>Corte + barba</option>
+          <option>Manicure</option>
+          <option>Coloración</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="fecha">Fecha</label>
+        <input id="fecha" type="date">
+      </div>
+
+      <div>
+        <label for="hora">Hora</label>
+        <input id="hora" type="time">
+      </div>
+    </div>
+
+    <button id="btnGuardar" class="btn" onclick="guardar()">
+      Guardar cita
+    </button>
+
+    <button id="btnLimpiar" class="btn-secundario" onclick="limpiarTodo()">
+      Limpiar
+    </button>
+
+    <button id="btnCancelar" class="btn-secundario"
+      onclick="cancelarEdicion()" hidden>
+      Cancelar edición
+    </button>
+
+    <div id="mensaje" class="note" role="status"></div>
+  </div>
+</section>
+
+<!-- MODAL PARA CONSULTAR LOS DATOS DE UNA CITA -->
+<div id="modalCita" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitulo" onclick="cerrarModalDesdeFondo(event)">
+  <div class="modal">
+    <h2 id="modalTitulo">Detalle de la cita</h2>
+    <div class="modal-descripcion">Información de la cita seleccionada</div>
+    <div class="modal-datos">
+      <div class="modal-dato"><small>Cliente</small><strong id="detalleCliente">—</strong></div>
+      <div class="modal-dato"><small>Servicio</small><strong id="detalleServicio">—</strong></div>
+      <div class="modal-dato"><small>Fecha</small><strong id="detalleFecha">—</strong></div>
+      <div class="modal-dato"><small>Hora</small><strong id="detalleHora">—</strong></div>
+      <div class="modal-dato"><small>Estado</small><strong id="detalleEstado">—</strong></div>
+    </div>
+    <div class="modal-acciones">
+      <button class="btn" type="button" onclick="cerrarModal()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+</main>
+</div>
+
+
+</body>
+</html>

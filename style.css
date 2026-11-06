@@ -1,0 +1,66 @@
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f6f8;color:#263238}
+.app{min-height:100vh;display:flex}
+.sidebar{width:235px;background:#b6df1e;color:white;padding:24px 18px;flex-shrink:0}
+.logo{font-size:23px;font-weight:800;margin-bottom:8px}
+.subtitle{font-size:12px;opacity:.8;margin-bottom:30px}
+.nav button{width:100%;border:0;background:transparent;color:rgb(185, 30, 30);text-align:left;padding:13px 14px;border-radius:9px;margin:4px 0;cursor:pointer;font-size:15px}
+.nav button.active,.nav button:hover{background:rgba(255,255,255,.16)}
+.main{flex:1;padding:30px;max-width:1400px;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:25px}
+h1{margin:0;font-size:28px}
+.user{background:white;padding:10px 15px;border-radius:20px;box-shadow:0 2px 10px #00000012}
+.view{display:none}
+.view.active{display:block}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:22px 0}
+.card{background:white;border-radius:14px;padding:20px;box-shadow:0 4px 16px #00000010}
+.card small{color:#607d8b}
+.card strong{display:block;font-size:29px;margin-top:8px}
+.panel{background:white;border-radius:14px;padding:22px;box-shadow:0 4px 16px #00000010}
+.panel h2{margin-top:0}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+label{font-weight:bold;font-size:14px}
+input,select{width:100%;padding:12px;margin-top:7px;border:1px solid #cfd8dc;border-radius:8px;font-size:14px}
+.btn{margin-top:20px;background:#087a4b;color:white;border:0;padding:12px 20px;border-radius:8px;cursor:pointer;font-weight:bold}
+.btn:hover{background:#065f3a}
+.btn-secundario{margin-left:8px;background:#607d8b;color:white;border:0;padding:12px 16px;border-radius:8px;cursor:pointer;font-weight:bold}
+.btn-editar{background:#1565c0;color:white;border:0;padding:7px 12px;border-radius:6px;cursor:pointer;font-size:13px;margin-right:5px;margin-bottom:4px}
+.btn-eliminar{background:#c62828;color:white;border:0;padding:7px 12px;border-radius:6px;cursor:pointer;font-size:13px}
+.btn-eliminar:hover{background:#8e0000}
+.table-wrap{width:100%;overflow-x:auto}
+.table{width:100%;border-collapse:collapse;margin-top:15px;min-width:850px}
+.table th,.table td{padding:12px;border-bottom:1px solid #eceff1;text-align:left}
+.table th{background:#f7f9fa}
+.badge{padding:5px 9px;border-radius:12px;background:#e8f5e9;color:#2e7d32;font-size:12px}
+.note{margin-top:18px;color:#607d8b;font-size:13px}
+.editando{background:#fff8e1;border-left:4px solid #f9a825;padding:12px;border-radius:7px;margin-bottom:16px;color:#795548}
+.filtros{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-top:16px}
+.filtros input,.filtros select{margin-top:0}
+.mensaje-error{color:#b71c1c}
+
+/* Ventana emergente para consultar una cita */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(229, 116, 35, 0.62);z-index:1000;align-items:center;justify-content:center;padding:18px}
+.modal-overlay.visible{display:flex}
+.modal{width:100%;max-width:480px;background:white;border-radius:16px;padding:26px;box-shadow:0 18px 55px #00000035;animation:aparecer .18s ease-out}
+.modal h2{margin:0 0 8px;color:#087a4b}
+.modal-descripcion{color:#607d8b;font-size:14px;margin-bottom:20px}
+.modal-datos{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.modal-dato{background:#f3f6f8;padding:13px;border-radius:9px;overflow-wrap:anywhere}
+.modal-dato small{display:block;color:#607d8b;margin-bottom:5px}
+.modal-dato strong{font-size:15px}
+.modal-acciones{text-align:right;margin-top:22px}
+.modal-acciones .btn{margin-top:0}
+@keyframes aparecer{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:800px){
+.app{flex-direction:column}
+.sidebar{width:100%}
+.nav{display:flex;gap:8px}
+.nav button{width:auto;flex:1}
+.cards{grid-template-columns:1fr}
+.form-grid,.filtros{grid-template-columns:1fr}
+.main{padding:18px}
+.top{align-items:flex-start;flex-direction:column}
+}
+</style>
